@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WasteTRA</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<div class="app-shell">
+
+    <aside class="sidebar" id="sidebar">
+        <div class="brand">
+            <div class="brand-mark">♻</div>
+            <div>
+                <h1>WasteTRA</h1>
+                <p>Barangay Kaypian</p>
+            </div>
+        </div>
+
+        <nav class="main-nav">
+            <button class="nav-item active" data-section="dashboard">
+                <span>▦</span> Dashboard
+            </button>
+            <button class="nav-item" data-section="schedule">
+                <span>□</span> Schedule
+            </button>
+            <button class="nav-item" data-section="monitoring">
+                <span>♧</span> Monitoring
+            </button>
+            <button class="nav-item" data-section="reports">
+                <span>▤</span> Reports
+            </button>
+            <button class="nav-item" data-section="analytics">
+                <span>▥</span> Analytics
+            </button>
+            <button class="nav-item" data-section="users">
+                <span>♙</span> Users
+            </button>
+        </nav>
+
+        <div class="sidebar-footer">
+            <p>Cleaner Barangay.</p>
+            <p>Greener Tomorrow.</p>
+        </div>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <button class="mobile-menu" id="mobileMenu">☰</button>
+
+            <div class="search-box">
+                <span>⌕</span>
+                <input type="search" id="searchInput" placeholder="Search...">
+            </div>
+
+            <div class="topbar-right">
+                <button class="icon-button" title="Notifications">♧<span class="notification-dot"></span></button>
+                <div class="profile">
+                    <div class="avatar">J</div>
+                    <span>Jomarie Lagman</span>
+                    <span>⌄</span>
+                </div>
+            </div>
+        </header>
+
+        <section class="page-content" id="dashboardSection">
+
+            <div class="page-heading">
+                <div>
+                    <h2>Good Day!, Jomarie Lagman</h2>
+                    <p>Here's what's happening with waste collection in your barangay today.</p>
+                </div>
+                <div class="current-date">September 23, 2026</div>
+            </div>
+
+            <section class="stat-grid">
+                <article class="stat-card">
+                    <div class="stat-icon green">♻</div>
+                    <div>
+                        <p>Total Waste Collected</p>
+                        <h3>4,285 <small>kg</small></h3>
+                        <span class="positive">↑ 12% from last week</span>
+                    </div>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-icon blue">▤</div>
+                    <div>
+                        <p>Total Reports</p>
+                        <h3>128</h3>
+                        <span class="positive">↑ 8% from last week</span>
+                    </div>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-icon amber">♧</div>
+                    <div>
+                        <p>Collection Completion Rate</p>
+                        <h3>94%</h3>
+                        <span class="positive">↑ 5% from last week</span>
+                    </div>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-icon red">!</div>
+                    <div>
+                        <p>Missed Collections</p>
+                        <h3>7</h3>
+                        <span class="negative">↓ 3% from last week</span>
+                    </div>
+                </article>
+            </section>
+
+            <section class="dashboard-grid">
+
+                <article class="card calendar-card">
+                    <div class="card-header">
+                        <div>
+                            <h3>Waste Collection & Data Calendar</h3>
+                            <p>Click a date to view or edit collection events.</p>
+                        </div>
+                        <button class="primary-button" id="addEventButton">+ Add Event</button>
+                    </div>
+
+                    <div class="calendar-layout">
+                        <div class="calendar-panel">
+                            <div class="calendar-toolbar">
+                                <button class="calendar-arrow" id="previousMonth">‹</button>
+                                <h3 id="calendarMonth">September 2026</h3>
+                                <button class="calendar-arrow" id="nextMonth">›</button>
+                            </div>
+
+                            <div class="weekdays">
+                                <span>Sun</span><span>Mon</span><span>Tue</span>
+                                <span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+                            </div>
+
+                            <div class="calendar-grid" id="calendarGrid"></div>
+
+                            <div class="calendar-legend">
+                                <span><i class="legend-dot scheduled"></i> Scheduled</span>
+                                <span><i class="legend-dot completed"></i> Completed</span>
+                                <span><i class="legend-dot missed"></i> Missed</span>
+                                <span><i class="legend-dot event"></i> Event</span>
+                            </div>
+                        </div>
+
+                        <div class="selected-date-panel">
+                            <div class="selected-date-header">
+                                <span>Selected Date</span>
+                                <strong id="selectedDateLabel">September 23, 2026</strong>
+                            </div>
+
+                            <div class="event-details" id="eventDetails"></div>
+
+                            <div class="waste-summary">
+                                <div class="summary-heading">
+                                    <h4>Waste Collected by Street</h4>
+                                    <span id="selectedTotal">417 kg</span>
+                                </div>
+                                <div id="streetWasteList"></div>
+                            </div>
+
+                            <button class="outline-button full-width" id="editSelectedButton">Edit Selected Date</button>
+                        </div>
+                    </div>
+                </article>
+
+                <div class="right-column">
+                    <article class="card chart-card">
+                        <div class="card-header compact">
+                            <div>
+                                <h3>Waste Collected by Type</h3>
+                                <p>Selected month</p>
+                            </div>
+                            <select class="select-control" id="wasteTypePeriod">
+                                <option>This Month</option>
+                                <option>Last Month</option>
+                            </select>
+                        </div>
+                        <div class="donut-wrap">
+                            <canvas id="wasteTypeChart"></canvas>
+                            <div class="donut-center">
+                                <strong>4,285 kg</strong>
+                                <span>Total</span>
+                            </div>
+                        </div>
+                        <div class="chart-legend-list">
+                            <div><span class="legend-label"><i class="dot biodegradable"></i>Biodegradable</span><strong>1,620 kg</strong><span>38%</span></div>
+                            <div><span class="legend-label"><i class="dot recyclable"></i>Recyclable</span><strong>1,240 kg</strong><span>29%</span></div>
+                            <div><span class="legend-label"><i class="dot residual"></i>Residual</span><strong>1,120 kg</strong><span>26%</span></div>
+                            <div><span class="legend-label"><i class="dot other"></i>Other</span><strong>305 kg</strong><span>7%</span></div>
+                        </div>
+                    </article>
+
+                    <article class="card chart-card trend-card">
+                        <div class="card-header compact">
+                            <div>
+                                <h3>Collection Trend</h3>
+                                <p>Daily waste collected</p>
+                            </div>
+                            <select class="select-control">
+                                <option>This Month</option>
+                                <option>Last Month</option>
+                            </select>
+                        </div>
+                        <canvas id="collectionTrendChart"></canvas>
+                    </article>
+                </div>
+            </section>
+
+            <section class="bottom-grid">
+                <article class="card table-card">
+                    <div class="card-header compact">
+                        <h3>Recent Collection Status</h3>
+                        <button class="text-button">View all →</button>
+                    </div>
+                    <div class="table-scroll">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Area / Street</th>
+                                    <th>Waste Type</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Sep 23, 2026</td><td>Street 1</td><td>Biodegradable</td><td>120 kg</td><td><span class="status completed">Completed</span></td></tr>
+                                <tr><td>Sep 23, 2026</td><td>Street 2</td><td>Recyclable</td><td>85 kg</td><td><span class="status completed">Completed</span></td></tr>
+                                <tr><td>Sep 23, 2026</td><td>Street 3</td><td>Residual</td><td>150 kg</td><td><span class="status completed">Completed</span></td></tr>
+                                <tr><td>Sep 23, 2026</td><td>Street 4</td><td>Biodegradable</td><td>62 kg</td><td><span class="status completed">Completed</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </article>
+
+                <article class="card table-card">
+                    <div class="card-header compact">
+                        <h3>Latest Reports</h3>
+                        <button class="text-button">View all →</button>
+                    </div>
+                    <div class="table-scroll">
+                        <table>
+                            <thead>
+                                <tr><th>#</th><th>Type</th><th>Location</th><th>Status</th><th>Date</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>RPT-001</td><td>Missed Collection</td><td>Street 2</td><td><span class="status pending">Pending</span></td><td>Sep 23</td></tr>
+                                <tr><td>RPT-002</td><td>Overflowing Waste</td><td>Street 4</td><td><span class="status review">Under Review</span></td><td>Sep 22</td></tr>
+                                <tr><td>RPT-003</td><td>Improper Disposal</td><td>Street 1</td><td><span class="status resolved">Resolved</span></td><td>Sep 21</td></tr>
+                                <tr><td>RPT-004</td><td>Other Concern</td><td>Street 3</td><td><span class="status resolved">Resolved</span></td><td>Sep 20</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </article>
+            </section>
+        </section>
+
+        <section class="placeholder-section" id="placeholderSection">
+            <div class="card placeholder-card">
+                <span class="placeholder-icon">♻</span>
+                <h2 id="placeholderTitle">Module</h2>
+                <p>This section will be developed after the dashboard prototype.</p>
+                <button class="primary-button" id="backToDashboard">Back to Dashboard</button>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<!-- Event Modal -->
+<div class="modal-overlay" id="eventModal">
+    <div class="modal">
+        <div class="modal-header">
+            <div>
+                <h3 id="modalTitle">Add Collection Event</h3>
+                <p>Create or edit a collection event for a calendar date.</p>
+            </div>
+            <button class="close-button" id="closeModal">×</button>
+        </div>
+
+        <form id="eventForm">
+            <input type="hidden" id="eventDate">
+
+            <label>
+                Event title
+                <input type="text" id="eventTitle" placeholder="e.g. Barangay Waste Collection" required>
+            </label>
+
+            <div class="form-row">
+                <label>
+                    Date
+                    <input type="date" id="eventDateInput" required>
+                </label>
+
+                <label>
+                    Time
+                    <input type="time" id="eventTime" value="07:00">
+                </label>
+            </div>
+
+            <div class="form-row">
+                <label>
+                    Area / Street
+                    <input type="text" id="eventArea" placeholder="e.g. Street 1" required>
+                </label>
+
+                <label>
+                    Waste type
+                    <select id="eventWasteType">
+                        <option>All Waste</option>
+                        <option>Biodegradable</option>
+                        <option>Recyclable</option>
+                        <option>Residual</option>
+                        <option>Other</option>
+                    </select>
+                </label>
+            </div>
+
+            <label>
+                Status
+                <select id="eventStatus">
+                    <option value="scheduled">Scheduled</option>
+                    <option value="completed">Completed</option>
+                    <option value="missed">Missed</option>
+                </select>
+            </label>
+
+            <label>
+                Notes
+                <textarea id="eventNotes" rows="3" placeholder="Optional notes..."></textarea>
+            </label>
+
+            <div class="modal-actions">
+                <button type="button" class="outline-button" id="cancelModal">Cancel</button>
+                <button type="submit" class="primary-button">Save Event</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
